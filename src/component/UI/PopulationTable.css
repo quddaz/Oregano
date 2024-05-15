@@ -1,0 +1,30 @@
+/* PopulationTable.css */
+
+.table-container {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.population-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.population-table th,
+.population-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.population-table th {
+  background-color: #f0f0f0;
+}
+
+.population-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.population-table tbody tr:hover {
+  background-color: #e0e0e0;
+}
