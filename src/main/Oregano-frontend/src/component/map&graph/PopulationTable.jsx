@@ -1,5 +1,5 @@
 import React from 'react';
-import './PopulationTable.css';
+import '../Css/PopulationTable.css';
 
 const data = [
     { region: '서울', population: '4,616,624', growth: '0.8%' },
