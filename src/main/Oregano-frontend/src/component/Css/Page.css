@@ -1,0 +1,15 @@
+/* MainContainer 스타일 */
+.main-container {
+    padding: 10%;
+    background-color: #f9f9f9;
+}
+
+/* Container 스타일 */
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
