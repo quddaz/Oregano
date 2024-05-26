@@ -31,11 +31,11 @@ public class NumberOfRegisteredDisabledPeopleService {
                 .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
-                .doOnNext(response -> System.out.println("Response body: " + response))
                 .flatMapMany(response -> {
                     // 여기에 JSON을 NumberOfRegisteredDisabledPeople 객체로 변환하는 로직 추가
                     // 예: JSON 파싱 후 Flux<NumberOfRegisteredDisabledPeople>로 변환
                     try {
+                        // ObjectMapper를 사용하여 JSON 문자열을 객체로 변환
                         ObjectMapper objectMapper = new ObjectMapper();
                         JavaType type = objectMapper.getTypeFactory().constructCollectionType(List.class, NumberOfRegisteredDisabledPeople.class);
                         List<NumberOfRegisteredDisabledPeople> list = objectMapper.readValue(response, type);
