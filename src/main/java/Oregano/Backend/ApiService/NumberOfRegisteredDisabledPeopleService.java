@@ -1,4 +1,4 @@
-package Oregano.Backend.Service;
+package Oregano.Backend.ApiService;
 
 import Oregano.Backend.DTO.NumberOfRegisteredDisabledPeople;
 import com.fasterxml.jackson.core.JsonProcessingException;
