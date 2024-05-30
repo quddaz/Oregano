@@ -15,6 +15,7 @@ import reactor.netty.http.client.HttpClient;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+
 @Configuration
 public class WebClientConfig {
     @Value("${fetchJob.url}")

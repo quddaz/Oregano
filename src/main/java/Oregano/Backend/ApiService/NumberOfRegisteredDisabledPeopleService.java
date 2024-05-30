@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -15,17 +16,17 @@ import java.util.List;
 
 @Service
 public class NumberOfRegisteredDisabledPeopleService {
+  private final WebClient webClient;
+  private final String apiKey;
 
-    private final WebClient webClient;
+  @Autowired
+  public NumberOfRegisteredDisabledPeopleService(WebClient.Builder webClientBuilder, @Value("${kosis.api.key}") String apiKey) {
+    this.webClient = webClientBuilder.build();
+    this.apiKey = apiKey;
+  }
 
-    @Autowired
-    public NumberOfRegisteredDisabledPeopleService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.build();
-    }
-
-    public Flux<NumberOfRegisteredDisabledPeople> getFilteredNumberOfRegisteredDisabledPeople() {
-
-        String url = "https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList&apiKey=ZDIxNzk0ZjBkYzU4MjkxYjlkOTBlMGMyOTdkMmQ2MGI=&itmId=00+&objL1=ALL&objL2=CHUT0+&objL3=TT+&objL4=&objL5=&objL6=&objL7=&objL8=&format=json&jsonVD=Y&prdSe=Y&newEstPrdCnt=1&prdInterval=2023&orgId=117&tblId=DT_11761_N005";
+  public Flux<NumberOfRegisteredDisabledPeople> getFilteredNumberOfRegisteredDisabledPeople() {
+    String url = "https://kosis.kr/openapi/Param/statisticsParameterData.do?method=getList&apiKey=" + apiKey + "&itmId=00+&objL1=ALL&objL2=CHUT0+&objL3=TT+&objL4=&objL5=&objL6=&objL7=&objL8=&format=json&jsonVD=Y&prdSe=Y&newEstPrdCnt=1&prdInterval=2023&orgId=117&tblId=DT_11761_N005";
 
         return this.webClient.get()
                 .uri(url)
