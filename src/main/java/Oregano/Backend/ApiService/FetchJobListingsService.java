@@ -19,23 +19,18 @@ public class FetchJobListingsService {
 
   @Value("${fetchJob.key}")
   private String secretKey;
-  private final int PAGE_NUMBER = 1;
-  private final int NUM_OF_ROWS = 400;
 
   public FetchJobListingsDTO.Items fetchJobListings(String region, String empType) {
+
+    String url = "https://apis.data.go.kr/B552583/job/job_list_env?serviceKey=" + secretKey + "&pageNo=1&numOfRows=400";
     log.info("API 호출: region={}, empType={}", region, empType);
 
     try {
       FetchJobListingsDTO responseData = webClient.get()
-          .uri(uriBuilder -> uriBuilder
-              .queryParam("serviceKey", secretKey)
-              .queryParam("pageNo", PAGE_NUMBER)
-              .queryParam("numOfRows", NUM_OF_ROWS)
-              .build())
+          .uri(url)
           .retrieve()
           .bodyToMono(FetchJobListingsDTO.class)
           .block();
-
       if (responseData != null && responseData.getBody() != null) {
         return filterService.filterJobListings(responseData, region, empType).getBody().getItems();
       } else {
@@ -47,11 +42,5 @@ public class FetchJobListingsService {
       throw new RuntimeException("API 호출 중 예외 발생:", e);
     }
   }
-  public Mono<String> test(){
-    String url = "https://apis.data.go.kr/B552583/job/job_list_env?serviceKey=sFd76vlvMGfsJNeEHd0ifb8V08Jb0kPQHvDAg6rlqp1W%2BFstDVJ0E7o5oAS9INRW7qA9rB4PY0XNiDV%2BJD5OSQ%3D%3D&pageNo=1&numOfRows=300";
-    return this.webClient.get()
-        .uri(url)
-        .retrieve()
-        .bodyToMono(String.class);
-  }
+
 }
