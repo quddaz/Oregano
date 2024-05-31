@@ -43,8 +43,4 @@ public class ApiController {
     ) {
         return new ResponseEntity<>(fetchJobListingsService.fetchJobListings(region, empType), HttpStatus.OK);
     }
-    @GetMapping("/test")
-    public Mono<String> get(){
-        return fetchJobListingsService.test();
-    }
 }
