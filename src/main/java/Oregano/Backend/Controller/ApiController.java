@@ -1,5 +1,8 @@
 package Oregano.Backend.Controller;
 
+import Oregano.Backend.ApiService.EstimatedSixMonthsIncomesService;
+import Oregano.Backend.DTO.EstimatedSixMonthsIncome;
+
 import Oregano.Backend.DTO.FetchJobListingsDTO;
 import Oregano.Backend.DTO.NumberOfRegisteredDisabledPeople;
 import Oregano.Backend.ApiService.FetchJobListingsService;
@@ -22,6 +25,8 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Map;
+
 
 
 @RestController
@@ -32,10 +37,19 @@ public class ApiController {
     private final NumberOfRegisteredDisabledPeopleService numberOfRegisteredDisabledPeopleService;
     private final FetchJobListingsService fetchJobListingsService;
 
+    private final EstimatedSixMonthsIncomesService estimatedSixMonthsIncomesService;
+
     @GetMapping("/filtered-disabled-people")
     public Flux<NumberOfRegisteredDisabledPeople> getFilteredNumberOfRegisteredDisabledPeople() {
         return numberOfRegisteredDisabledPeopleService.getFilteredNumberOfRegisteredDisabledPeople();
     }
+
+    @GetMapping("/")
+    public Mono<Map<String,List<EstimatedSixMonthsIncome>>> getEstimatedSixMonthsIncomes() {
+        return estimatedSixMonthsIncomesService.getFilteredEstimatedSixMonthsIncome();
+    }
+
+
     @GetMapping("/fetchJobListings")
     public ResponseEntity<FetchJobListingsDTO.Items> callApi(
         @RequestParam(value = "region") String region
