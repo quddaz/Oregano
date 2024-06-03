@@ -7,9 +7,10 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
-  API_CALL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "API 호출 중 오류가 발생했습니다."),
+  API_CALL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 오류 발생"),
   JSON_PARSING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "JSON 파싱 중 오류가 발생했습니다."),
-  NO_DATA_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "데이터를 가져오지 못했습니다.");
+  NO_DATA_FAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "데이터를 가져오지 못했습니다."),
+  WEBCLIENT_CALL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "API 호출 중 오류가 발생했습니다.");
   private final HttpStatus httpStatus;
   private final String message;
 }
