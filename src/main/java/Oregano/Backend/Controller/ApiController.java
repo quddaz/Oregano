@@ -44,7 +44,7 @@ public class ApiController {
         return numberOfRegisteredDisabledPeopleService.getFilteredNumberOfRegisteredDisabledPeople();
     }
 
-    @GetMapping("/")
+    @GetMapping("/EstimatedSixMonthsIncome")
     public Mono<Map<String,List<EstimatedSixMonthsIncome>>> getEstimatedSixMonthsIncomes() {
         return estimatedSixMonthsIncomesService.getFilteredEstimatedSixMonthsIncome();
     }

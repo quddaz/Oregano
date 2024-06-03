@@ -1,6 +1,9 @@
 package Oregano.Backend.ApiService;
 
 import Oregano.Backend.DTO.FetchJobListingsDTO;
+import Oregano.Backend.Exception.ApiException;
+import Oregano.Backend.Exception.Enum.ErrorCode;
+import Oregano.Backend.Exception.NoDataFailException;
 import Oregano.Backend.Service.JobListingsFilterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +37,10 @@ public class FetchJobListingsService {
       if (responseData != null && responseData.getBody() != null) {
         return filterService.filterJobListings(responseData, region, empType).getBody().getItems();
       } else {
-        log.error("데이터를 가져오는 데 실패했습니다.");
-        throw new RuntimeException("데이터를 가져오는 데 실패했습니다.");
+        throw new NoDataFailException(ErrorCode.NO_DATA_FAIL_ERROR);
       }
     } catch (Exception e) {
-      log.error("API 호출 중 예외 발생:", e);
-      throw new RuntimeException("API 호출 중 예외 발생:", e);
+      throw new ApiException(ErrorCode.API_CALL_ERROR);
     }
   }
 

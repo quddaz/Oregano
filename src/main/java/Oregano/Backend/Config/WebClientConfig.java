@@ -26,7 +26,6 @@ public class WebClientConfig {
         return WebClient.builder();
     }
 
-
     @Bean
     public WebClient FetchJobListings_WebClient() {
         // WebClient를 생성하고 DefaultUriBuilderFactory에 EncodingMode를 NONE으로 설정
