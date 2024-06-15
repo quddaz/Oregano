@@ -46,6 +46,6 @@ public class ApiController {
         @RequestParam(value = "region") String region
         ,@RequestParam(value = "empType") String empType
     ) {
-        return new ResponseEntity<>(fetchJobListingsService.fetchJobListings(region, empType), HttpStatus.OK);
+        return new ResponseEntity<>(fetchJobListingsService.fetchJobListings(region, empType).getBody().getItems(), HttpStatus.OK);
     }
 }

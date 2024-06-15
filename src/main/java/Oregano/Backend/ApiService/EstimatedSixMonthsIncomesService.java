@@ -6,19 +6,23 @@ import Oregano.Backend.Exception.Enum.ErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
+@Slf4j
 public class EstimatedSixMonthsIncomesService {
 
     private final WebClient webClient;
@@ -46,16 +50,16 @@ public class EstimatedSixMonthsIncomesService {
             List<EstimatedSixMonthsIncome> list = objectMapper.readValue(response, type);
 
             // ITM_NM에 따라 그룹화
-            Map<String, List<EstimatedSixMonthsIncome>> resultMap = new HashMap<>();
-            for (EstimatedSixMonthsIncome income : list) {
-                String itmNm = income.getITM_NM();
-                resultMap.computeIfAbsent(itmNm, k -> new ArrayList<>()).add(income);
-            }
-
-            return resultMap;
+            return list.stream()
+                .collect(Collectors.groupingBy(EstimatedSixMonthsIncome::getITM_NM));
         } catch (JsonProcessingException e) {
+            log.error("JSON parsing error: " + e.getMessage());
             throw new ApiException(ErrorCode.JSON_PARSING_ERROR);
-        } catch (Exception ex) {
+        } catch (WebClientRequestException e) {
+            log.error("Error response from WebClient: " + e.getMessage());
+            throw new ApiException(ErrorCode.WEBCLIENT_CALL_ERROR);
+        } catch (Exception e){
+            log.error("Exception" + e.getMessage());
             throw new ApiException(ErrorCode.API_CALL_ERROR);
         }
     }
